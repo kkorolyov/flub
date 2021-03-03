@@ -54,6 +54,6 @@ jobs:
 
       - name: pages
         uses: peaceiris/actions-gh-pages@v3
-        env:
-          publish_dir: ./build/docs
+        with:
+          publish_dir: ./build/docs/javadoc
           github_token: ${{ secrets.GITHUB_TOKEN }}
