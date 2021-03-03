@@ -50,7 +50,7 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/build.gradle.kts') }}
 
       - name: docs
-        run: ./gradlew docs -Pversion=$(echo ${{ github.ref }} | sed s#refs/tags/##)
+        run: ./gradlew javadoc -Pversion=$(echo ${{ github.ref }} | sed s#refs/tags/##)
 
       - name: pages
         uses: peaceiris/actions-gh-pages@v3
