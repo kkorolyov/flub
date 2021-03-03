@@ -12,6 +12,9 @@ group = "dev.kkorolyov"
 description = "Collection of additional generic data structures, procedures, and utility functions"
 
 java {
+	sourceCompatibility = JavaVersion.VERSION_14
+	targetCompatibility = JavaVersion.VERSION_14
+
 	withSourcesJar()
 	withJavadocJar()
 }
