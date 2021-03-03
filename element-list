@@ -1,0 +1,7 @@
+module:dev.kkorolyov.flopple
+dev.kkorolyov.flopple.collections
+dev.kkorolyov.flopple.data
+dev.kkorolyov.flopple.data.procedure
+dev.kkorolyov.flopple.function
+dev.kkorolyov.flopple.function.convert
+dev.kkorolyov.flopple.function.throwing
