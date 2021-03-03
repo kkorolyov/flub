@@ -8,7 +8,7 @@ plugins {
 	`maven-publish`
 }
 
-group = "dev.kkorolyov.flopple"
+group = "dev.kkorolyov"
 description = "Collection of additional generic data structures, procedures, and utility functions"
 
 java {
