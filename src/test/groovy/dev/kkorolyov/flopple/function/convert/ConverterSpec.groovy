@@ -13,6 +13,12 @@ class ConverterSpec extends Specification {
 	}
 
 	private <T, R> Converter<T, R> makeConverter(T expected, R result) {
-		return { input -> input == expected ? result : null }
+		// cannot use closure due to groovy and JPMS access issue
+		return new Converter<T, R>() {
+			@Override
+			R convert(T input) {
+				return input == expected ? result : null
+			}
+		}
 	}
 }

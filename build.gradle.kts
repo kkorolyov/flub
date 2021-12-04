@@ -8,29 +8,11 @@ plugins {
 	`maven-publish`
 }
 
-group = "dev.kkorolyov"
-description = "Collection of additional generic data structures, procedures, and utility functions"
-
-java {
-	sourceCompatibility = JavaVersion.VERSION_14
-	targetCompatibility = JavaVersion.VERSION_14
-
-	withSourcesJar()
-	withJavadocJar()
-}
-
-tasks.test {
-	useJUnitPlatform()
-}
-
 repositories {
-	jcenter()
+	mavenCentral()
 }
 dependencies {
-	val spockVersion: String by project
-	val byteBuddyVersion: String by project
-	testImplementation("org.spockframework:spock-core:$spockVersion")
-	testImplementation("net.bytebuddy:byte-buddy:$byteBuddyVersion")
+	testImplementation(libs.bundles.test)
 
 	dependencyLocking {
 		lockAllConfigurations()
@@ -47,11 +29,23 @@ publishing {
 	repositories {
 		maven {
 			name = "GitHubPackages"
-			url = uri("https://maven.pkg.github.com/kkorolyov/flopple")
+			url = uri("https://maven.pkg.github.com/kkorolyov/flub")
 			credentials {
 				username = System.getenv("GITHUB_ACTOR")
 				password = System.getenv("GITHUB_TOKEN")
 			}
 		}
 	}
+}
+
+java {
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
+
+	withSourcesJar()
+	withJavadocJar()
+}
+
+tasks.test {
+	useJUnitPlatform()
 }

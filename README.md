@@ -1,8 +1,8 @@
-![verify](https://github.com/kkorolyov/flopple/workflows/verify/badge.svg)
-![publish](https://github.com/kkorolyov/flopple/workflows/publish/badge.svg)
+![verify](https://github.com/kkorolyov/flub/workflows/verify/badge.svg)
+![publish](https://github.com/kkorolyov/flub/workflows/publish/badge.svg)
 
-# flopple
+# flub
 
 Collection of additional generic data structures, procedures, and utility functions for Java applications.
 
-[Docs](https://kkorolyov.github.io/flopple/)
+[Docs](https://kkorolyov.github.io/flub/)

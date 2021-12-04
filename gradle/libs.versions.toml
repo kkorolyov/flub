@@ -1,0 +1,10 @@
+[versions]
+spock = "2.+"
+byteBuddy = "1.+"
+
+[libraries]
+spock = { module = "org.spockframework:spock-core", version.ref = "spock" }
+byteBuddy = { module = "net.bytebuddy:byte-buddy", version.ref = "byteBuddy" }
+
+[bundles]
+test = ["spock", "byteBuddy"]

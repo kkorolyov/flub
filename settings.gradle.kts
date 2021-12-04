@@ -1,3 +1,3 @@
-rootProject.name = "flopple"
+rootProject.name = "flub"
 
-enableFeaturePreview("ONE_LOCKFILE_PER_PROJECT")
+enableFeaturePreview("VERSION_CATALOGS")
