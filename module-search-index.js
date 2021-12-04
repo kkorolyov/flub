@@ -1,1 +1,1 @@
-moduleSearchIndex = [{"l":"dev.kkorolyov.flopple"}]
+moduleSearchIndex = [{"l":"dev.kkorolyov.flopple"}];updateSearchResults();
