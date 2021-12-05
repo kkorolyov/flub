@@ -1,8 +1,8 @@
-module dev.kkorolyov.flopple {
-	exports dev.kkorolyov.flopple.data;
-	exports dev.kkorolyov.flopple.data.procedure;
-	exports dev.kkorolyov.flopple.function;
-	exports dev.kkorolyov.flopple.function.convert;
-	exports dev.kkorolyov.flopple.function.throwing;
-	exports dev.kkorolyov.flopple.collections;
+module dev.kkorolyov.flub {
+	exports dev.kkorolyov.flub.data;
+	exports dev.kkorolyov.flub.data.procedure;
+	exports dev.kkorolyov.flub.function;
+	exports dev.kkorolyov.flub.function.convert;
+	exports dev.kkorolyov.flub.function.throwing;
+	exports dev.kkorolyov.flub.collections;
 }
