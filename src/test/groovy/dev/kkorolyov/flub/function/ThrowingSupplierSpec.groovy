@@ -1,6 +1,6 @@
 package dev.kkorolyov.flub.function
 
-import dev.kkorolyov.flopple.function.throwing.ThrowingSupplier
+import dev.kkorolyov.flub.function.throwing.ThrowingSupplier
 
 import spock.lang.Specification
 

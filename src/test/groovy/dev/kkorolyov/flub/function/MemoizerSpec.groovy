@@ -9,7 +9,7 @@ import java.util.function.Function
 import java.util.function.Predicate
 import java.util.function.Supplier
 
-import static dev.kkorolyov.flopple.function.Memoizer.memoize
+import static dev.kkorolyov.flub.function.Memoizer.memoize
 
 class MemoizerSpec extends Specification {
 	Object arg = Mock()

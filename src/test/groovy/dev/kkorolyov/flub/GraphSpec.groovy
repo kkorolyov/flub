@@ -1,6 +1,6 @@
 package dev.kkorolyov.flub
 
-import dev.kkorolyov.flopple.data.Graph
+import dev.kkorolyov.flub.data.Graph
 
 import spock.lang.Specification
 

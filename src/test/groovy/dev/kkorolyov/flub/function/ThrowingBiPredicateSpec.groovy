@@ -1,6 +1,6 @@
 package dev.kkorolyov.flub.function
 
-import dev.kkorolyov.flopple.function.throwing.ThrowingBiPredicate
+import dev.kkorolyov.flub.function.throwing.ThrowingBiPredicate
 
 import spock.lang.Specification
 

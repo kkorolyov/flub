@@ -1,6 +1,6 @@
 package dev.kkorolyov.flub
 
-import dev.kkorolyov.flopple.data.Trie
+import dev.kkorolyov.flub.data.Trie
 
 import spock.lang.Specification
 
