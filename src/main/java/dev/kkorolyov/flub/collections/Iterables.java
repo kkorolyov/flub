@@ -63,7 +63,7 @@ public final class Iterables {
 		return () -> new ExtraArrayIterator<>(initial.iterator(), others);
 	}
 
-	private static class MultiIterator<T> implements Iterator<T> {
+	private static final class MultiIterator<T> implements Iterator<T> {
 		private final Iterator<Iterable<? extends T>> delegates;
 		private Iterator<? extends T> current;
 
@@ -94,7 +94,7 @@ public final class Iterables {
 		}
 	}
 
-	private static class ExtraArrayIterator<T> implements Iterator<T> {
+	private static final class ExtraArrayIterator<T> implements Iterator<T> {
 		private final Iterator<? extends T> delegate;
 		private final T[] array;
 		private int arrayIndex;

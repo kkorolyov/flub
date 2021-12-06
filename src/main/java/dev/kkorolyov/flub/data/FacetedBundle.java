@@ -23,7 +23,7 @@ import static java.util.Collections.singleton;
  * @param <F> facet type
  * @param <T> element type
  */
-public class FacetedBundle<K, F, T> implements Iterable<Entry<F, T>> {
+public final class FacetedBundle<K, F, T> implements Iterable<Entry<F, T>> {
 	private final Indices<K> indices = new Indices<>();
 	private final FacetSets<F> facetSets = new FacetSets<>();
 	private final List<Entry<F, T>> elements = new ArrayList<>();
@@ -52,7 +52,7 @@ public class FacetedBundle<K, F, T> implements Iterable<Entry<F, T>> {
 	 * @param facets facets to stream intersection for
 	 * @return stream over the intersection of all elements with {@code facets} applied
 	 */
-	public Stream<T> stream(Iterable<F> facets) {
+	public Stream<T> stream(Iterable<? extends F> facets) {
 		BitSet intersection = new BitSet(elements.size());
 		intersection.set(0, elements.size());
 
@@ -110,7 +110,7 @@ public class FacetedBundle<K, F, T> implements Iterable<Entry<F, T>> {
 		return elements.iterator();
 	}
 
-	private static class Indices<K> {
+	private static final class Indices<K> {
 		private final Map<K, Integer> indices = new HashMap<>();
 		private final Queue<Integer> reclaimedIndices = new ArrayDeque<>();
 
@@ -131,7 +131,7 @@ public class FacetedBundle<K, F, T> implements Iterable<Entry<F, T>> {
 		}
 	}
 
-	private static class FacetSets<F> {
+	private static final class FacetSets<F> {
 		private final Map<F, BitSet> facetSets = new HashMap<>();
 
 		BitSet getFacetSet(F key) {
