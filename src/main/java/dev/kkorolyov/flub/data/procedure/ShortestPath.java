@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
 
 import static java.util.Comparator.comparing;
@@ -114,6 +115,53 @@ public interface ShortestPath<T, E> {
 				}
 			}
 
+			return backtrack(previous, end);
+		};
+	}
+
+	/**
+	 * Returns a shortest path procedure which
+	 * <pre>
+	 * respects edge weights
+	 * uses A* algorithm to find a path
+	 * has runtime O(E log V), space O(V) (V = number of nodes, E = number of edges)
+	 * </pre>
+	 */
+	static <T, E extends Comparable<E>> ShortestPath<T, E> aStar(BinaryOperator<E> adder, BiFunction<T, T, E> heuristic) {
+		return (graph, start, end) -> {
+			Comparator<E> comparator = nullsLast(naturalOrder());
+
+			Map<Node<T, E>, E> gCost = new HashMap<>();
+			Map<Node<T, E>, E> fCost = new HashMap<>(gCost.size());
+
+			PriorityQueue<Node<T, E>> unseen = new PriorityQueue<>(comparing(fCost::get, comparator));
+
+			Map<T, T> previous = new HashMap<>();
+
+			Node<T, E> startNode = graph.get(start);
+			Node<T, E> endNode = graph.get(end);
+
+			if (startNode != null && endNode != null) {
+				for (Node<T, E> node = startNode; node != null; node = unseen.poll()) {
+					if (node.equals(endNode)) break;
+
+					for (Node.RelatedNode<T, E> relation : node.getOutboundRelations()) {
+						E incomingCost = gCost.get(node);
+
+						E newCost = (incomingCost == null || relation.getEdge() == null) ? relation.getEdge() : adder.apply(incomingCost, relation.getEdge());
+						E oldCost = gCost.get(relation.getNode());
+
+						if ((oldCost == null && newCost == null) || comparator.compare(newCost, oldCost) < 0) {
+							previous.put(relation.getNode().getValue(), node.getValue());
+
+							unseen.remove(relation.getNode());
+							gCost.put(relation.getNode(), newCost);
+							fCost.put(relation.getNode(), adder.apply(newCost, heuristic.apply(relation.getNode().getValue(), end)));
+							unseen.add(relation.getNode());
+						}
+					}
+				}
+			}
 			return backtrack(previous, end);
 		};
 	}
