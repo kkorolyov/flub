@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - master
-      - major
-      - minor
-      - hotfix
 
 jobs:
   package:
@@ -28,25 +25,21 @@ jobs:
           cache: gradle
           distribution: zulu
 
-      - name: publish snapshot
+      - name: publish
         if: ${{ github.ref_name == 'master' }}
-        run: ./gradlew publish --no-daemon -Preckon.stage=snapshot
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: publish release
-        if: ${{ github.ref_name != 'master' }}
-        run: ./gradlew publish reckonTagPush --no-daemon -Preckon.stage=final -Preckon.scope=${{ github.ref_name }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: sync
-        if: ${{ github.ref_name != 'master' }}
         run: |
-          git fetch --unshallow
-          git checkout master
-          git pull
-          git merge --no-ff ${{ github.ref_name }} -m "Sync release"
+          scope=minor
+          case "${{ github.event.commits[0].message }}" in
+            *MAJOR* | *BREAKING*)
+              scope=major
+              ;;
+            *PATCH* | *HOTFIX*)
+              scope=patch
+              ;;
+          esac
+          ./gradlew publish reckonTagPush --no-daemon -Preckon.stage=final -Preckon.scope=$scope
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   docs:
     runs-on: ubuntu-latest
