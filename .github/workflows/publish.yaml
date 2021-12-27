@@ -2,8 +2,11 @@ name: publish
 
 on:
   push:
-    tags:
-      - "[0-9].[0-9].[0-9]*"
+    branches:
+      - master
+      - major
+      - minor
+      - hotfix
 
 jobs:
   package:
@@ -16,6 +19,8 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: java
         uses: actions/setup-java@v2
         with:
@@ -23,8 +28,15 @@ jobs:
           cache: gradle
           distribution: zulu
 
-      - name: publish
-        run: ./gradlew publish --no-daemon -Pversion=$(echo ${{ github.ref }} | sed s#refs/tags/##)
+      - name: publish snapshot
+        if: ${{ github.ref_name == 'master' }}
+        run: ./gradlew publish --no-daemon
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: publish minor
+        if: ${{ github.ref_name == 'minor' }}
+        run: ./gradlew publish reckonTagCreate --no-daemon -Preckon.stage=final -Preckon.scope=minor
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -42,7 +54,7 @@ jobs:
           distribution: zulu
 
       - name: docs
-        run: ./gradlew javadoc --no-daemon -Pversion=$(echo ${{ github.ref }} | sed s#refs/tags/##)
+        run: ./gradlew javadoc --no-daemon
 
       - name: pages
         uses: peaceiris/actions-gh-pages@v3
