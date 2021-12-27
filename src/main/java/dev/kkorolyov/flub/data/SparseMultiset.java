@@ -23,7 +23,31 @@ public final class SparseMultiset<T, K> implements Iterable<T> {
 	private final Map<K, BitSet> sparse = new HashMap<>();
 
 	/**
+	 * Returns the element at index {@code i}.
+	 */
+	public T get(int i) {
+		return dense.get(i);
+	}
+	/**
+	 * Returns all elements associated with all {@code keys}.
+	 */
+	public Iterable<T> get(Iterable<? extends K> keys) {
+		BitSet fullKey = compute.get();
+		fullKey.set(0, dense.size());
+
+		for (K key : keys) {
+			BitSet bitSet = sparse.get(key);
+			if (bitSet != null) fullKey.and(bitSet);
+		}
+
+		return fullKey.stream()
+				.mapToObj(dense::get)
+				::iterator;
+	}
+
+	/**
 	 * Adds a new {@code element} and returns its index to use for subsequent modifications.
+	 * @throws IllegalArgumentException if {@code element} is {@code null}
 	 * @see #remove(int)
 	 * @see #put(int, Iterable)
 	 * @see #remove(int, Iterable)
@@ -73,25 +97,28 @@ public final class SparseMultiset<T, K> implements Iterable<T> {
 		}
 	}
 
-	/**
-	 * Returns all elements associated with all {@code keys}.
-	 */
-	public Iterable<T> get(Iterable<? extends K> keys) {
-		BitSet fullKey = compute.get();
-		fullKey.set(0, dense.size());
-
-		for (K key : keys) {
-			BitSet bitSet = sparse.get(key);
-			if (bitSet != null) fullKey.and(bitSet);
-		}
-
-		return fullKey.stream()
-				.mapToObj(dense::get)
-				::iterator;
-	}
-
 	@Override
 	public Iterator<T> iterator() {
 		return dense.stream().filter(Objects::nonNull).iterator();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (obj == null || getClass() != obj.getClass()) return false;
+		SparseMultiset<?, ?> o = (SparseMultiset<?, ?>) obj;
+		return dense.equals(o.dense) && sparse.equals(o.sparse);
+	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(dense, sparse);
+	}
+
+	@Override
+	public String toString() {
+		return "SparseMultiset{" +
+				"dense=" + dense +
+				", sparse=" + sparse +
+				'}';
 	}
 }

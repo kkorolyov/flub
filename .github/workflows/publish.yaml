@@ -34,11 +34,19 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: publish minor
-        if: ${{ github.ref_name == 'minor' }}
-        run: ./gradlew publish reckonTagCreate --no-daemon -Preckon.stage=final -Preckon.scope=minor
+      - name: publish release
+        if: ${{ github.ref_name != 'master' }}
+        run: ./gradlew publish reckonTagPush --no-daemon -Preckon.stage=final -Preckon.scope=${{ github.ref_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: sync
+        if: ${{ github.ref_name != 'master' }}
+        run: |
+          git fetch --unshallow
+          git checkout master
+          git pull
+          git merge --no-ff ${{ github.ref_name }} -m "Sync release"
 
   docs:
     runs-on: ubuntu-latest

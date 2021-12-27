@@ -5,6 +5,15 @@ import spock.lang.Specification
 class SparseMultisetSpec extends Specification {
 	SparseMultiset<Object, Integer> multiset = new SparseMultiset()
 
+	def "gets by index"() {
+		Object element = Mock()
+
+		int i = multiset.add(element)
+
+		expect:
+		multiset.get(i) == element
+	}
+
 	def "gets by keys"() {
 		int key = 3
 		int otherKey = 15
