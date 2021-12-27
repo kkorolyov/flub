@@ -6,6 +6,7 @@ plugins {
 	`java-library`
 	groovy
 	`maven-publish`
+	id("org.ajoberstar.reckon") version "0.+"
 }
 
 repositories {
@@ -17,6 +18,23 @@ dependencies {
 	dependencyLocking {
 		lockAllConfigurations()
 	}
+}
+
+java {
+	withSourcesJar()
+	withJavadocJar()
+}
+
+tasks.test {
+	useJUnitPlatform()
+}
+
+reckon {
+	scopeFromProp()
+	snapshotFromProp()
+}
+tasks.reckonTagCreate {
+	dependsOn(tasks.check)
 }
 
 publishing {
@@ -36,16 +54,4 @@ publishing {
 			}
 		}
 	}
-}
-
-java {
-	sourceCompatibility = JavaVersion.VERSION_17
-	targetCompatibility = JavaVersion.VERSION_17
-
-	withSourcesJar()
-	withJavadocJar()
-}
-
-tasks.test {
-	useJUnitPlatform()
 }

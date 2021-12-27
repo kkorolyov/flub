@@ -1,4 +1,4 @@
-package dev.kkorolyov.flub
+package dev.kkorolyov.flub.data
 
 import dev.kkorolyov.flub.data.Trie
 

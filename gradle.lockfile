@@ -2,7 +2,7 @@
 # Manual edits can break the build and are not advised.
 # This file is expected to be part of source control.
 cglib:cglib-nodep:3.3.0=testRuntimeClasspath
-net.bytebuddy:byte-buddy:1.12.3=testCompileClasspath,testRuntimeClasspath
+net.bytebuddy:byte-buddy:1.12.6=testCompileClasspath,testRuntimeClasspath
 org.apiguardian:apiguardian-api:1.1.2=testCompileClasspath
 org.assertj:assertj-core:3.20.2=testRuntimeClasspath
 org.codehaus.groovy:groovy:3.0.9=testCompileClasspath,testRuntimeClasspath
