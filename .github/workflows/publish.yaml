@@ -30,7 +30,7 @@ jobs:
 
       - name: publish snapshot
         if: ${{ github.ref_name == 'master' }}
-        run: ./gradlew publish --no-daemon
+        run: ./gradlew publish --no-daemon -Preckon.stage=snapshot
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
