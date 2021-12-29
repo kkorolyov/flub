@@ -32,6 +32,15 @@ class SparseMultisetSpec extends Specification {
 		multiset.get([key]) as Set == forKey as Set
 		multiset.get([otherKey]) as Set == forOtherKey as Set
 	}
+	def "misses by unknown key"() {
+		int key = 4
+
+		when:
+		multiset.add(Mock(Object))
+
+		then:
+		(multiset.get([key]) as Set).empty
+	}
 
 	def "removes element at index"() {
 		Object element = Mock()

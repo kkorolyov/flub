@@ -37,7 +37,11 @@ public final class SparseMultiset<T, K> implements Iterable<T> {
 
 		for (K key : keys) {
 			BitSet bitSet = sparse.get(key);
-			if (bitSet != null) fullKey.and(bitSet);
+			if (bitSet != null) {
+				fullKey.and(bitSet);
+			} else {
+				fullKey.clear();
+			}
 		}
 
 		return fullKey.stream()
