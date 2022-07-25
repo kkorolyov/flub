@@ -1,0 +1,25 @@
+name: build
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        version: [ 17 ]
+
+    steps:
+      - id: checkout
+        uses: actions/checkout@v3
+      - id: publish-gradle
+        uses: kkorolyov/publish-gradle@0.4.0
+        with:
+          java-version: ${{ matrix.version }}
+          publish-branch: master
+          token: ${{ secrets.GITHUB_TOKEN }}

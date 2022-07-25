@@ -16,8 +16,8 @@ class ConverterSpec extends Specification {
 		// cannot use closure due to groovy and JPMS access issue
 		return new Converter<T, R>() {
 			@Override
-			R convert(T input) {
-				return input == expected ? result : null
+			R convert(T t) {
+				return t == expected ? result : null
 			}
 		}
 	}
