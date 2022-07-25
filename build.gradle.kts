@@ -1,12 +1,12 @@
-tasks.wrapper {
-	distributionType = Wrapper.DistributionType.ALL
-}
-
 plugins {
 	`java-library`
 	groovy
 	`maven-publish`
 	id("org.ajoberstar.reckon") version "0.+"
+}
+
+tasks.wrapper {
+	distributionType = Wrapper.DistributionType.ALL
 }
 
 repositories {
@@ -30,8 +30,9 @@ tasks.test {
 }
 
 reckon {
-	scopeFromProp()
-	snapshotFromProp()
+	stages("rc", "final")
+	setScopeCalc(calcScopeFromProp())
+	setStageCalc(calcStageFromProp())
 }
 tasks.reckonTagCreate {
 	dependsOn(tasks.check)
@@ -39,7 +40,7 @@ tasks.reckonTagCreate {
 
 publishing {
 	publications {
-		create<MavenPublication>("mvn") {
+		create<MavenPublication>("main") {
 			from(components["java"])
 		}
 	}
