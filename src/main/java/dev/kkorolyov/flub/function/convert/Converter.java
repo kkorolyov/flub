@@ -6,7 +6,6 @@ import java.util.function.Predicate;
 import java.util.stream.StreamSupport;
 
 import static dev.kkorolyov.flub.collections.Iterables.append;
-import static java.util.stream.Collectors.toList;
 
 /**
  * Converts elements from {@code T} to {@code R}.
@@ -49,11 +48,18 @@ public interface Converter<T, R> {
 	}
 
 	/**
-	 * Converts a {@code T} to an {@code R}.
-	 * @param in input to convert
-	 * @return conversion of {@code in} to {@code R} type
+	 * Returns a converter which converts with {@code delegate} and throws if it returns an empty optional.
 	 */
-	R convert(T in);
+	static <T, R> Converter<T, R> enforcing(Converter<? super T, Optional<R>> delegate) {
+		return t -> delegate.convert(t).orElseThrow(() -> new IllegalArgumentException("cannot convert: " + t));
+	}
+
+	/**
+	 * Converts a {@code T} to an {@code R}.
+	 * @param t input to convert
+	 * @return conversion of {@code t} to {@code R} type
+	 */
+	R convert(T t);
 
 	/**
 	 * Converts multiple {@code T}s to {@code R}s.
@@ -63,7 +69,7 @@ public interface Converter<T, R> {
 	default Collection<R> convert(Iterable<? extends T> in) {
 		return StreamSupport.stream(in.spliterator(), false)
 				.map(this::convert)
-				.collect(toList());
+				.toList();
 	}
 
 	/**
