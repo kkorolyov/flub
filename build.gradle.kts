@@ -9,26 +9,6 @@ tasks.wrapper {
 	distributionType = Wrapper.DistributionType.ALL
 }
 
-repositories {
-	mavenCentral()
-}
-dependencies {
-	testImplementation(libs.bundles.test)
-
-	dependencyLocking {
-		lockAllConfigurations()
-	}
-}
-
-java {
-	withSourcesJar()
-	withJavadocJar()
-}
-
-tasks.test {
-	useJUnitPlatform()
-}
-
 reckon {
 	stages("rc", "final")
 	setScopeCalc(calcScopeFromProp())
@@ -36,6 +16,26 @@ reckon {
 }
 tasks.reckonTagCreate {
 	dependsOn(tasks.check)
+}
+
+repositories {
+	mavenCentral()
+}
+dependencies {
+	dependencyLocking {
+		lockAllConfigurations()
+	}
+
+	testImplementation(libs.bundles.test)
+}
+
+tasks.test {
+	useJUnitPlatform()
+}
+
+java {
+	withSourcesJar()
+	withJavadocJar()
 }
 
 publishing {
