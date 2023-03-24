@@ -12,10 +12,10 @@ class ShortestPathSpec extends Specification {
 	static class BfsSpec extends ShortestPathSpec {
 		@Shared
 		Graph<Integer, Void> graph = new Graph<>()
-				.put(1, [2, 3])
-				.put(2, [3, 5])
-				.put(3, 4)
-				.put(4, 5)
+				.putUndirected(1, [2, 3])
+				.putUndirected(2, [3, 5])
+				.putUndirected(3, 4)
+				.putUndirected(4, 5)
 				.put(42)
 
 		def "gets empty path on null start"() {
@@ -49,9 +49,9 @@ class ShortestPathSpec extends Specification {
 	static class DijkstraSpec extends ShortestPathSpec {
 		@Shared
 		Graph<String, Integer> graph = new Graph<>()
-				.put('A', 'B', 2)
-				.put('A', 'C', 5)
-				.put('B', 'C', 2)
+				.putUndirected('A', 'B', 2)
+				.putUndirected('A', 'C', 5)
+				.putUndirected('B', 'C', 2)
 				.put('Lonely')
 
 		def "gets empty path on null start"() {
@@ -85,9 +85,9 @@ class ShortestPathSpec extends Specification {
 	static class AStarSpec extends ShortestPathSpec {
 		@Shared
 		Graph<String, Integer> graph = new Graph<>()
-				.put('A', 'B', 2)
-				.put('A', 'C', 5)
-				.put('B', 'C', 2)
+				.putUndirected('A', 'B', 2)
+				.putUndirected('A', 'C', 5)
+				.putUndirected('B', 'C', 2)
 				.put('Lonely')
 
 		@Shared

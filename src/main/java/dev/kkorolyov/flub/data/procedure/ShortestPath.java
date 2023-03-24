@@ -57,7 +57,7 @@ public interface ShortestPath<T, E> {
 					}
 				}
 			}
-			return backtrack(previous, end);
+			return backtrack(previous, end, start);
 		};
 	}
 
@@ -115,7 +115,7 @@ public interface ShortestPath<T, E> {
 				}
 			}
 
-			return backtrack(previous, end);
+			return backtrack(previous, end, start);
 		};
 	}
 
@@ -162,14 +162,15 @@ public interface ShortestPath<T, E> {
 					}
 				}
 			}
-			return backtrack(previous, end);
+			return backtrack(previous, end, start);
 		};
 	}
 
-	private static <T> List<T> backtrack(Map<T, ? extends T> previous, T end) {
+	private static <T> List<T> backtrack(Map<T, ? extends T> previous, T end, T start) {
 		List<T> result = new ArrayList<>();
 		for (T value = previous.containsKey(end) ? end : null; value != null; value = previous.get(value)) {
 			result.add(value);
+			if (value.equals(start)) break;
 		}
 		Collections.reverse(result);
 
