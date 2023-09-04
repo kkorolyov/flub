@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - id: checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - id: publish-gradle
         uses: kkorolyov/publish-gradle@0.4.0
         with:
