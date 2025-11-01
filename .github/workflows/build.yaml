@@ -12,14 +12,30 @@ jobs:
 
     strategy:
       matrix:
-        version: [ 17 ]
+        version:
+          - 25
 
     steps:
       - id: checkout
-        uses: actions/checkout@v3
-      - id: publish-gradle
-        uses: kkorolyov/publish-gradle@0.4.0
+        uses: actions/checkout@v4
+      - id: java
+        uses: actions/setup-java@v4
         with:
           java-version: ${{ matrix.version }}
-          publish-branch: master
-          token: ${{ secrets.GITHUB_TOKEN }}
+          distribution: temurin
+      - id: gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - id: build
+        shell: bash
+        run: ./gradlew build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - id: failureReport
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports-${{ matrix.version }}
+          path: |
+            **/build/reports
