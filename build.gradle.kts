@@ -20,7 +20,12 @@ tasks.reckonTagCreate {
 
 repositories {
 	mavenCentral()
-	maven { url = uri("https://central.sonatype.com/repository/maven-snapshots/") }
+	maven {
+		url = uri("https://central.sonatype.com/repository/maven-snapshots/")
+		content {
+			includeGroup("org.spockframework")
+		}
+	}
 }
 dependencies {
 	dependencyLocking {
