@@ -1,7 +1,5 @@
 package dev.kkorolyov.flub.data
 
-import dev.kkorolyov.flub.data.Graph
-
 import spock.lang.Specification
 
 class GraphSpec extends Specification {
