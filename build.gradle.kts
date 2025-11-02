@@ -2,7 +2,7 @@ plugins {
 	`java-library`
 	groovy
 	`maven-publish`
-	id("org.ajoberstar.reckon") version "0.+"
+	id("org.ajoberstar.reckon") version "1.+"
 }
 
 tasks.wrapper {
