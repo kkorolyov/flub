@@ -1,6 +1,6 @@
 [versions]
 spock = "2.4-groovy-5.0-SNAPSHOT"
-junit = "5.+"
+junit = "6.+"
 byteBuddy = "1.+"
 
 [libraries]
