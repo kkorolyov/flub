@@ -1,0 +1,55 @@
+name: bump
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        version:
+          - 25
+
+    steps:
+      - id: checkout
+        uses: actions/checkout@v4
+      - id: java
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ matrix.version }}
+          distribution: temurin
+      - id: gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - id: bump
+        shell: bash
+        run: |
+          ./gradlew dependencies --write-locks
+          git diff --quiet
+          echo "unchanged=$?" >> $GITHUB_OUTPUT
+        # diff may return exit code 1
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - id: token
+        if: ${{ ! steps.bump.outputs.unchanged }}
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.BUMPBOT_ID }}
+          private-key: ${{ secrets.BUMPBOT_KEY }}
+
+      - id: pr
+        if: ${{ ! steps.bump.outputs.unchanged }}
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ steps.token.outputs.token }}
+          sign-commits: true
+          commit-message: bump
+          title: Bump gradle lockfile
+          base: master
+          branch: bump

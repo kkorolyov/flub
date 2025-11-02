@@ -20,6 +20,7 @@ tasks.reckonTagCreate {
 
 repositories {
 	mavenCentral()
+	maven { url = uri("https://central.sonatype.com/repository/maven-snapshots/") }
 }
 dependencies {
 	dependencyLocking {
@@ -27,6 +28,7 @@ dependencies {
 	}
 
 	testImplementation(libs.bundles.test)
+	testRuntimeOnly(libs.bundles.testRuntime)
 }
 
 tasks.test {
