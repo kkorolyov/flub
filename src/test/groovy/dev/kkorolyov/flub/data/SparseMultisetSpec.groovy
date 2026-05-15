@@ -76,4 +76,14 @@ class SparseMultisetSpec extends Specification {
 		reusedI == 0
 		nextI == 1
 	}
+
+	def "prunes tombstones from result"() {
+		Object removed = Mock()
+
+		when:
+		multiset.remove(multiset.add(removed))
+
+		then:
+		multiset.get([]).toList().isEmpty()
+	}
 }
