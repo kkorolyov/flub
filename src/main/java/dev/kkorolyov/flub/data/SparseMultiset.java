@@ -45,8 +45,8 @@ public final class SparseMultiset<T, K> implements Iterable<T> {
 		}
 
 		return fullKey.stream()
-				.mapToObj(dense::get)
-				::iterator;
+			.mapToObj(dense::get)
+			::iterator;
 	}
 
 	/**
@@ -61,7 +61,12 @@ public final class SparseMultiset<T, K> implements Iterable<T> {
 
 		Integer nextAvailable = tombstones.poll();
 		int i = nextAvailable != null ? nextAvailable : dense.size();
-		dense.add(element);
+		if (nextAvailable != null) {
+			dense.set(nextAvailable, element);
+		} else {
+			dense.add(element);
+		}
+
 		return i;
 	}
 	/**
@@ -121,8 +126,8 @@ public final class SparseMultiset<T, K> implements Iterable<T> {
 	@Override
 	public String toString() {
 		return "SparseMultiset{" +
-				"dense=" + dense +
-				", sparse=" + sparse +
-				'}';
+			"dense=" + dense +
+			", sparse=" + sparse +
+			'}';
 	}
 }
