@@ -1,5 +1,4 @@
-![verify](https://github.com/kkorolyov/flub/workflows/verify/badge.svg)
-![publish](https://github.com/kkorolyov/flub/workflows/publish/badge.svg)
+![build](https://github.com/kkorolyov/flub/workflows/build/badge.svg)
 
 # flub
 
@@ -9,4 +8,4 @@ Collection of additional generic data structures, procedures, and utility functi
 
 ## Committing and Publishing
 
-PRs tagged with the `major`, `minor`, or `patch` labels will publish a new release on merge to `master`.
+This project uses [Release Please](https://github.com/googleapis/release-please) with [Conventional Commits](https://www.conventionalcommits.org) to automate versioning and publishing on `master` merges.

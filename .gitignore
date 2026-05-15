@@ -4,5 +4,3 @@ build/
 
 # IDE
 .idea/
-*.iml
-out/
