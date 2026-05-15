@@ -15,7 +15,7 @@ import java.util.Queue;
  * Provides for efficient retrieval of all elements associated with a given subset of keys.
  */
 public final class SparseMultiset<T, K> implements Iterable<T> {
-	private static final ThreadLocal<BitSet> compute = ThreadLocal.withInitial(BitSet::new);
+	private final BitSet fullKey = new BitSet();
 
 	private final List<T> dense = new ArrayList<>();
 	private final Queue<Integer> tombstones = new ArrayDeque<>();
@@ -32,9 +32,11 @@ public final class SparseMultiset<T, K> implements Iterable<T> {
 	 * Returns all elements associated with all {@code keys}.
 	 */
 	public Iterable<T> get(Iterable<? extends K> keys) {
-		BitSet fullKey = compute.get();
 		fullKey.set(0, dense.size());
 
+		for (int i : tombstones) {
+			fullKey.clear(i);
+		}
 		for (K key : keys) {
 			BitSet bitSet = sparse.get(key);
 			if (bitSet != null) {
