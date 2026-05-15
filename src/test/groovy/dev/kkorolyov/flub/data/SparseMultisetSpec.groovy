@@ -59,4 +59,21 @@ class SparseMultisetSpec extends Specification {
 		expect:
 		!multiset.remove(0)
 	}
+
+	def "reuses tombstone indexes"() {
+		Object removed = Mock()
+		Object reused = Mock()
+		Object next = Mock()
+
+		int reusedI = multiset.add(removed)
+
+		when:
+		multiset.remove(reusedI)
+		multiset.add(reused)
+		int nextI = multiset.add(next)
+
+		then:
+		reusedI == 0
+		nextI == 1
+	}
 }
